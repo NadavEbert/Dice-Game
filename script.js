@@ -5,6 +5,7 @@ scores = [ 0, 0 ];
 
 document.querySelector('.btn-roll').addEventListener('click', function() {
 	roll();
+	showDice();
 	if (dice > 1) {
 		currentScore += dice;
 		manipulateDom('addCurrentScore');
@@ -52,4 +53,10 @@ function reset() {
 	var domPlayer = document.querySelectorAll('.container-player');
 	domPlayer[0].classList.toggle('active');
 	domPlayer[1].classList.toggle('active');
+}
+function showDice() {
+	var domDice = document.querySelector('.dice-img');
+	var domDiceImg = document.querySelector('.dice-img img');
+	domDice.style.display = 'block';
+	domDice.innerHTML = '<img src="img/dice-' + dice + '.png" alt="image of rolled dice">';
 }
