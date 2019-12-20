@@ -1,7 +1,8 @@
-var scores, currentScore, currentPlayer, dice;
+var scores, currentScore, currentPlayer, dice, domDice;
 currentPlayer = 0;
 currentScore = 0;
 scores = [ 0, 0 ];
+var domDice = document.querySelector('.dice-img');
 
 document.querySelector('.btn-roll').addEventListener('click', function() {
 	roll();
@@ -37,10 +38,12 @@ function manipulateDom(action) {
 	} else if (action === 'switchPlayer') {
 		domScore.textContent = scores[currentPlayer];
 		domCurrentScore.textContent = '0';
+		hideDice();
 		reset();
 	} else {
 		domScore.textContent = '0';
 		domCurrentScore.textContent = '0';
+		hideDice();
 		reset();
 	}
 }
@@ -55,8 +58,9 @@ function reset() {
 	domPlayer[1].classList.toggle('active');
 }
 function showDice() {
-	var domDice = document.querySelector('.dice-img');
-	var domDiceImg = document.querySelector('.dice-img img');
 	domDice.style.display = 'block';
 	domDice.innerHTML = '<img src="img/dice-' + dice + '.png" alt="image of rolled dice">';
+}
+function hideDice() {
+	domDice.style.display = 'none';
 }

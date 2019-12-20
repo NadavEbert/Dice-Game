@@ -67,11 +67,16 @@ body {
 	background-color: rgb(255, 79, 79);
 	border-radius: 50%;
 	text-transform: capitalize;
+	transition: background-color 0.5s;
 	color: #e2e2e2;
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
 	-ms-border-radius: 50%;
 	-o-border-radius: 50%;
+	-webkit-transition: background-color 0.5s;
+	-moz-transition: background-color 0.5s;
+	-ms-transition: background-color 0.5s;
+	-o-transition: background-color 0.5s;
 }
 
 .score {
@@ -151,7 +156,10 @@ body {
 /*---------------------------------------------ACTIVE-----------------------------------------*/
 
 .container-player.active {
-	background-color: rgb(235, 235, 235);
+	background-color: rgb(255, 229, 229);
+}
+.active .current-score {
+	background-color: rgb(255, 22, 22);
 }
 
 .active .player-name h1 {
@@ -173,7 +181,7 @@ body {
 	width: 1rem;
 	height: 1rem;
 	opacity: 1;
-	background-color: rgb(255, 79, 79);
+	background-color: rgb(255, 22, 22);
 	border-radius: 50%;
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
