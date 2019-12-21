@@ -38,13 +38,31 @@ function manipulateDom(action) {
 	} else if (action === 'switchPlayer') {
 		domScore.textContent = scores[currentPlayer];
 		domCurrentScore.textContent = '0';
-		hideDice();
+		//domScore.style.animationName = 'pop-score';
+		animateScore();
+		setTimeout(function() {
+			console.log('hey');
+			hideDice();
+		}, 1000);
 		reset();
 	} else {
 		domScore.textContent = '0';
 		domCurrentScore.textContent = '0';
+		animateScore();
 		hideDice();
 		reset();
+	}
+
+	function animateScore() {
+		var animatedScore = domScore;
+		animatedScore.classList.add('animate');
+		console.log(animatedScore);
+
+		setTimeout(function() {
+			console.log(animatedScore);
+			animatedScore.classList.remove('animate');
+			console.log('works');
+		}, 1500);
 	}
 }
 

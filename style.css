@@ -50,6 +50,9 @@ body {
 	align-items: center;
 	justify-content: space-between;
 }
+.upper-half {
+	margin-top: 5%;
+}
 
 .player-name h1 {
 	font-weight: 100;
@@ -57,10 +60,15 @@ body {
 }
 
 .player-score {
-	margin-top: 10%;
+	height: 130px;
+	width: 130px;
 	font-size: 5rem;
 	color: rgb(255, 79, 79);
 	font-weight: 200;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	animation-duration: 1.22s;
 }
 .current-score {
 	padding: 2rem;
@@ -167,11 +175,11 @@ body {
 	animation-name: pop;
 	animation-direction: normal;
 	animation-duration: 0.5s;
-	transform: scale(1.05);
-	-webkit-transform: scale(1.05);
-	-moz-transform: scale(1.05);
-	-ms-transform: scale(1.05);
-	-o-transform: scale(1.05);
+	transform: scale(1.02);
+	-webkit-transform: scale(1.02);
+	-moz-transform: scale(1.02);
+	-ms-transform: scale(1.02);
+	-o-transform: scale(1.02);
 }
 
 .active .dot {
@@ -188,6 +196,9 @@ body {
 	-ms-border-radius: 50%;
 	-o-border-radius: 50%;
 }
+.animate.player-score {
+	animation-name: pop-score;
+}
 @keyframes pop {
 	from {
 		transform: scale(1.0);
@@ -197,10 +208,22 @@ body {
 		-o-transform: scale(1.0);
 	}
 	to {
-		transform: scale(1.05);
-		-webkit-transform: scale(1.05);
-		-moz-transform: scale(1.05);
-		-ms-transform: scale(1.05);
-		-o-transform: scale(1.05);
+		transform: scale(1.02);
+		-webkit-transform: scale(1.02);
+		-moz-transform: scale(1.02);
+		-ms-transform: scale(1.02);
+		-o-transform: scale(1.02);
+	}
+}
+
+@keyframes pop-score {
+	0% {
+		font-size: 5rem;
+	}
+	50% {
+		font-size: 7rem;
+	}
+	100% {
+		font-size: 5rem;
 	}
 }
