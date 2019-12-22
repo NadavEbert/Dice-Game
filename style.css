@@ -68,7 +68,6 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	animation-duration: 1.22s;
 }
 .current-score {
 	padding: 2rem;
@@ -198,7 +197,13 @@ body {
 }
 .animate.player-score {
 	animation-name: pop-score;
+	animation-duration: 1.22s;
 }
+
+.winner .dot {
+	display: none;
+}
+
 @keyframes pop {
 	from {
 		transform: scale(1.0);

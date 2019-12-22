@@ -1,15 +1,18 @@
-var scores, currentScore, currentPlayer, dice, domDice;
-currentPlayer = 0;
-currentScore = 0;
-scores = [ 0, 0 ];
-var domDice = document.querySelector('.dice-img');
-
-document.querySelector('.btn-roll').addEventListener('click', function() {
+var scores, currentScore, currentPlayer, dice, domDice, btnRoll, btnHold, btnNewGame, playerContainers;
+initGame();
+domDice = document.querySelector('.dice-img');
+btnRoll = document.querySelector('.btn-roll');
+btnHold = document.querySelector('.btn-hold');
+btnNewGame = document.querySelector('.btn-new');
+playerContainers = document.querySelectorAll('.container-player');
+btnRoll.addEventListener('click', function() {
 	roll();
-	showDice();
+
 	if (dice > 1) {
 		currentScore += dice;
-		manipulateDom('addCurrentScore');
+		if (currentScore + scores[currentPlayer] >= 20) {
+			manipulateDom('winner');
+		} else manipulateDom('addCurrentScore');
 	} else {
 		currentScore = 0;
 		scores[currentPlayer] = 0;
@@ -18,50 +21,53 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
 	}
 });
 
-function roll() {
-	dice = Math.floor(Math.random() * 6) + 1;
-	console.log(dice);
-}
-
-document.querySelector('.btn-hold').addEventListener('click', function() {
+btnHold.addEventListener('click', function() {
 	scores[currentPlayer] += currentScore;
-	manipulateDom('switchPlayer');
+	manipulateDom('hold');
 	switchCurrentPlayer();
 	currentScore = 0;
 });
+btnNewGame.addEventListener('click', function() {
+	initGame();
+	if (!playerContainers[0].classList.contains('active')) {
+		switchCurrentPlayer();
+		switchCurrentPlayerDom();
+	}
+});
 
 function manipulateDom(action) {
+	showDice();
 	var domScore = document.querySelector('.active .player-score');
 	var domCurrentScore = document.querySelector('.active .score');
 	if (action === 'addCurrentScore') {
 		domCurrentScore.textContent = currentScore;
-	} else if (action === 'switchPlayer') {
+	} else if (action === 'hold') {
 		domScore.textContent = scores[currentPlayer];
 		domCurrentScore.textContent = '0';
-		//domScore.style.animationName = 'pop-score';
-		animateScore();
-		setTimeout(function() {
-			console.log('hey');
-			hideDice();
-		}, 1000);
-		reset();
+		hideDice();
+		animate(domScore);
+		switchCurrentPlayerDom();
+	} else if (action === 'winner') {
+		var winnerH1 = document.querySelector('.active .player-name h1');
+		winnerH1.textContent = 'winner!';
+		document.querySelector('.active .dot').style.display = 'none';
+		domScore.textContent = currentScore + scores[currentPlayer];
+		domCurrentScore.textContent = '0';
+		animate(domScore);
+		disableButtons();
 	} else {
 		domScore.textContent = '0';
 		domCurrentScore.textContent = '0';
-		animateScore();
-		hideDice();
-		reset();
+		animate(domScore);
+		setTimeout(hideDice, 1000);
+		switchCurrentPlayerDom();
 	}
 
-	function animateScore() {
-		var animatedScore = domScore;
-		animatedScore.classList.add('animate');
-		console.log(animatedScore);
+	function animate(element) {
+		element.classList.add('animate');
 
 		setTimeout(function() {
-			console.log(animatedScore);
-			animatedScore.classList.remove('animate');
-			console.log('works');
+			element.classList.remove('animate');
 		}, 1500);
 	}
 }
@@ -70,10 +76,9 @@ function switchCurrentPlayer() {
 	currentPlayer === 0 ? (currentPlayer = 1) : (currentPlayer = 0);
 }
 
-function reset() {
-	var domPlayer = document.querySelectorAll('.container-player');
-	domPlayer[0].classList.toggle('active');
-	domPlayer[1].classList.toggle('active');
+function switchCurrentPlayerDom() {
+	playerContainers[0].classList.toggle('active');
+	playerContainers[1].classList.toggle('active');
 }
 function showDice() {
 	domDice.style.display = 'block';
@@ -81,4 +86,18 @@ function showDice() {
 }
 function hideDice() {
 	domDice.style.display = 'none';
+}
+function roll() {
+	dice = Math.floor(Math.random() * 6) + 1;
+	console.log(dice);
+}
+function disableButtons() {
+	btnRoll.style.display = 'none';
+	btnHold.style.display = 'none';
+}
+function initGame() {
+	currentPlayer = 0;
+	currentScore = 0;
+	scores = [ 0, 0 ];
+	dice = 0;
 }
