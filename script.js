@@ -1,4 +1,14 @@
-var scores, currentScore, currentPlayer, dice, domDice, btnRoll, btnHold, btnNewGame, playerContainers, domScores;
+var scores,
+	currentScore,
+	currentPlayer,
+	dice,
+	domDice,
+	btnRoll,
+	btnHold,
+	btnNewGame,
+	playerContainers,
+	finalScore,
+	domScores;
 initGame();
 domDice = document.querySelector('.dice-img');
 btnRoll = document.querySelector('.btn-roll');
@@ -7,11 +17,13 @@ btnNewGame = document.querySelector('.btn-new');
 playerContainers = document.querySelectorAll('.container-player');
 domScores = document.querySelectorAll('.player-score');
 btnRoll.addEventListener('click', function() {
+	finalScore = document.getElementById('final-score').value;
+	console.log(finalScore);
 	roll();
 
 	if (dice > 1) {
 		currentScore += dice;
-		if (currentScore + scores[currentPlayer] >= 20) {
+		if (currentScore + scores[currentPlayer] >= finalScore) {
 			manipulateDom('winner');
 		} else manipulateDom('addCurrentScore');
 	} else {
