@@ -123,6 +123,7 @@ body {
 	top: 15%;
 }
 .btn-roll {
+	display: inherit;
 	top: 65%;
 }
 .btn-hold {
@@ -195,13 +196,10 @@ body {
 	-ms-border-radius: 50%;
 	-o-border-radius: 50%;
 }
-.animate.player-score {
+.animate.player-score,
+.animate.player-name h1 {
 	animation-name: pop-score;
 	animation-duration: 1.22s;
-}
-
-.winner .dot {
-	display: none;
 }
 
 @keyframes pop {

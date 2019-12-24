@@ -1,10 +1,11 @@
-var scores, currentScore, currentPlayer, dice, domDice, btnRoll, btnHold, btnNewGame, playerContainers;
+var scores, currentScore, currentPlayer, dice, domDice, btnRoll, btnHold, btnNewGame, playerContainers, domScores;
 initGame();
 domDice = document.querySelector('.dice-img');
 btnRoll = document.querySelector('.btn-roll');
 btnHold = document.querySelector('.btn-hold');
 btnNewGame = document.querySelector('.btn-new');
 playerContainers = document.querySelectorAll('.container-player');
+domScores = document.querySelectorAll('.player-score');
 btnRoll.addEventListener('click', function() {
 	roll();
 
@@ -28,48 +29,56 @@ btnHold.addEventListener('click', function() {
 	currentScore = 0;
 });
 btnNewGame.addEventListener('click', function() {
+	manipulateDom('new game');
 	initGame();
-	if (!playerContainers[0].classList.contains('active')) {
-		switchCurrentPlayer();
-		switchCurrentPlayerDom();
-	}
 });
 
 function manipulateDom(action) {
 	showDice();
-	var domScore = document.querySelector('.active .player-score');
-	var domCurrentScore = document.querySelector('.active .score');
+	var activeDomScore = document.querySelector('.active .player-score');
+	var activeDomCurrentScore = document.querySelector('.active .score');
+	var activeH1 = document.querySelector('.active .player-name h1');
+	var activeDot = document.querySelector('.active .dot');
 	if (action === 'addCurrentScore') {
-		domCurrentScore.textContent = currentScore;
+		activeDomCurrentScore.textContent = currentScore;
 	} else if (action === 'hold') {
-		domScore.textContent = scores[currentPlayer];
-		domCurrentScore.textContent = '0';
+		activeDomScore.textContent = scores[currentPlayer];
+		activeDomCurrentScore.textContent = '0';
 		hideDice();
-		animate(domScore);
+		animate(activeDomScore);
 		switchCurrentPlayerDom();
 	} else if (action === 'winner') {
-		var winnerH1 = document.querySelector('.active .player-name h1');
-		winnerH1.textContent = 'winner!';
-		document.querySelector('.active .dot').style.display = 'none';
-		domScore.textContent = currentScore + scores[currentPlayer];
-		domCurrentScore.textContent = '0';
-		animate(domScore);
+		activeH1.textContent = 'winner!';
+		activeDot.style.display = 'none';
+		activeDomScore.textContent = currentScore + scores[currentPlayer];
+		activeDomCurrentScore.textContent = '0';
+		animate(activeDomScore);
 		disableButtons();
+	} else if (action === 'new game') {
+		activeH1.textContent = 'player ' + (currentPlayer + 1);
+		if (!playerContainers[0].classList.contains('active')) {
+			switchCurrentPlayerDom();
+		}
+		domScores.forEach((score) => {
+			score.textContent = '0';
+		});
+		activeDot.style.display = 'block';
+		activateButtons();
+		hideDice();
 	} else {
-		domScore.textContent = '0';
-		domCurrentScore.textContent = '0';
-		animate(domScore);
+		activeDomScore.textContent = '0';
+		activeDomCurrentScore.textContent = '0';
+		animate(activeDomScore);
 		setTimeout(hideDice, 1000);
 		switchCurrentPlayerDom();
 	}
+}
 
-	function animate(element) {
-		element.classList.add('animate');
-
-		setTimeout(function() {
-			element.classList.remove('animate');
-		}, 1500);
-	}
+function animate(element) {
+	element.classList.add('animate');
+	setTimeout(function() {
+		element.classList.remove('animate');
+	}, 1500);
 }
 
 function switchCurrentPlayer() {
@@ -95,6 +104,11 @@ function disableButtons() {
 	btnRoll.style.display = 'none';
 	btnHold.style.display = 'none';
 }
+function activateButtons() {
+	btnRoll.style.display = 'inherit';
+	btnHold.style.display = 'inherit';
+}
+
 function initGame() {
 	currentPlayer = 0;
 	currentScore = 0;
