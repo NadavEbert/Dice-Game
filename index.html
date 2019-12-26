@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
     <link rel="stylesheet" href="style.css" type="text/css">
     <title>Dice</title>
 </head>
@@ -16,7 +16,16 @@
 
             <div class="container-player active">
                 <div class=" half upper-half">
-                    <div class="player-name"><div class="dot"></div><h1 class="p1-name">player 1</h1></div>
+                    <div class="player-name">
+                        <div>
+                            <h1>player 1</h1>
+                        </div>
+                        <div class="dot-container">
+                            <div class="dot hold"></div>
+                            <div class="dot hold"></div>
+                            <div class="dot hold"></div>
+                        </div>
+                    </div>
                     <div class="player-score">0</div>
                 </div>
                 <div class="half lower-half">
@@ -28,7 +37,15 @@
             </div>
             <div class="container-player">
                 <div class=" half upper-half">
-                    <div class="player-name"><div class="dot"></div><h1>player 2</h1></div>
+                        <div class="player-name"><div>
+                            <h1>player 2</h1>
+                        </div>
+                        <div class="dot-container">
+                            <div class="dot hold"></div>
+                            <div class="dot hold"></div>
+                            <div class="dot hold"></div>
+                        </div>
+                    </div>
                     <div class="player-score">0</div>
                 </div>
                 <div class="half lower-half">
@@ -38,6 +55,7 @@
                     </div>
                 </div>
             </div>
+            <button class='rules'><i class="material-icons-outlined">info</i></button>
 
         </div>
 
@@ -46,6 +64,7 @@
             <div class="button btn-roll"><i class="material-icons">autorenew</i>roll dice</div>
             <div class="button btn-hold"><i class="material-icons">forward</i>hold</div>
             <div class="dice-img"><img src="img/dice-5.png" alt="image of rolled dice"></div>
+
     </div>
 
 
