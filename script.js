@@ -31,11 +31,14 @@ playerContainers = document.querySelectorAll('.container-player');
 domScores = document.querySelectorAll('.player-score');
 domCurrentScores = document.querySelectorAll('.score');
 domFinalScoreInput = document.getElementById('final-score');
-//omDotContainers = document.querySelectorAll('.dot-container');
 domDots = document.querySelectorAll('.dot');
+
+
 initGame();
-btnRoll.addEventListener('click', function() {
+
+btnRoll.addEventListener('click', function () {
 	finalScore = domFinalScoreInput.value;
+
 	if (!finalScore) {
 		finalScore = DEFAULT_FINAL_VALUE;
 		domFinalScoreInput.value = DEFAULT_FINAL_VALUE;
@@ -43,6 +46,7 @@ btnRoll.addEventListener('click', function() {
 		finalScore = domFinalScoreInput.value;
 		domFinalScoreInput.value = finalScore;
 	}
+
 	domFinalScoreInput.disabled = true;
 	gameIsPlaying = true;
 	holdValue = Math.floor(finalScore / 10);
@@ -53,13 +57,16 @@ btnRoll.addEventListener('click', function() {
 		//	btnHold.removeChild(node);
 		btnHold.appendChild(node);
 	}
+
 	console.log('final score: ' + finalScore);
 	roll();
+
 	if (dice > 1) {
 		currentScore += dice;
 		if (currentScore + scores[currentPlayer] >= finalScore) {
 			manipulateDom('winner');
-		} else manipulateDom('addCurrentScore');
+		} else
+			manipulateDom('addCurrentScore');
 	} else {
 		currentScore = 0;
 		scores[currentPlayer] = 0;
@@ -68,17 +75,26 @@ btnRoll.addEventListener('click', function() {
 	}
 });
 
-btnHold.addEventListener('click', function() {
+btnHold.addEventListener('click', function () {
 	if (holds[currentPlayer] > 0 && currentScore > 0) {
+
+		if (scores[currentPlayer] + currentScore + holdValue >= finalScore) {
+			currentScore += holdValue;
+			manipulateDom('winner');
+			return;
+		}
+		console.log('entered hold scope')
 		scores[currentPlayer] += currentScore + holdValue;
 		holds[currentPlayer]--;
 		console.log('hold count: ' + holds[currentPlayer]);
 		manipulateDom('hold');
 		switchCurrentPlayer();
 		currentScore = 0;
+
 	}
 });
-btnNewGame.addEventListener('click', function() {
+
+btnNewGame.addEventListener('click', function () {
 	manipulateDom('new game');
 	initGame();
 });
@@ -89,11 +105,14 @@ function manipulateDom(action) {
 	var activeDomCurrentScore = document.querySelector('.active .score');
 	var activeH1 = document.querySelector('.active .player-name h1');
 	var activeDomDots = document.querySelectorAll('.active .dot');
+
 	if (action === 'addCurrentScore') {
 		activeDomCurrentScore.textContent = currentScore;
 	} else if (action === 'hold') {
 		activeDomScore.textContent = scores[currentPlayer];
 		activeDomCurrentScore.textContent = '0';
+
+
 		var holdsToRemove = HOLD_COUNT - holds[currentPlayer];
 		for (var i = 0; i < holdsToRemove; i++) {
 			if (activeDomDots[HOLD_COUNT - i - 1].classList.contains('hold'))
@@ -112,6 +131,7 @@ function manipulateDom(action) {
 		activeDomCurrentScore.textContent = '0';
 		animate(activeDomScore);
 		disableButtons();
+
 	} else if (action === 'new game') {
 		activeH1.textContent = 'player ' + (currentPlayer + 1);
 		if (btnHold.textContent.includes('+')) btnHold.removeChild(node);
@@ -134,14 +154,14 @@ function manipulateDom(action) {
 		activeDomScore.textContent = '0';
 		activeDomCurrentScore.textContent = '0';
 		animate(activeDomScore);
-		setTimeout(hideDice, 1000);
+
 		switchCurrentPlayerDom();
 	}
 }
 
 function animate(element) {
 	element.classList.add('animate');
-	setTimeout(function() {
+	setTimeout(function () {
 		element.classList.remove('animate');
 	}, 1500);
 }
@@ -177,8 +197,8 @@ function activateButtons() {
 function initGame() {
 	currentPlayer = 0;
 	currentScore = 0;
-	scores = [ 0, 0 ];
-	holds = [ HOLD_COUNT, HOLD_COUNT ];
+	scores = [0, 0];
+	holds = [HOLD_COUNT, HOLD_COUNT];
 	dice = 0;
 	gameIsPlaying = false;
 	domFinalScoreInput.disabled = false;
