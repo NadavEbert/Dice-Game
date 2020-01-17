@@ -15,6 +15,10 @@ var scores,
 	domScores,
 	domCurrentScores,
 	domFinalScore,
+	domRules,
+	domExitRules,
+	mainContainer,
+	rulesContainer,
 	domDotContainers,
 	domDots,
 	node,
@@ -32,9 +36,58 @@ domScores = document.querySelectorAll('.player-score');
 domCurrentScores = document.querySelectorAll('.score');
 domFinalScoreInput = document.getElementById('final-score');
 domDots = document.querySelectorAll('.dot');
-
+domRules = document.querySelector('.info');
+domExitRules = document.querySelector('.exit');
+mainContainer = document.querySelector('.main-container');
+rulesContainer = document.querySelector('.container-rules');
 
 initGame();
+function containerToggler() {
+	rulesContainer.classList.toggle('visible');
+	rulesContainer.classList.toggle('invisible');
+	mainContainer.classList.toggle('visible');
+	mainContainer.classList.toggle('invisible');
+}
+function buttonAndDiceToggler() {
+	document.querySelectorAll('.float').forEach(element => {
+		element.classList.toggle('invisible');
+		element.classList.toggle('visible');
+	});
+	if (domDice.style.display === 'block') {
+		domDice.classList.toggle('visible');
+		domDice.classList.toggle('invisible');
+	}
+
+}
+domRules.addEventListener('click', function () {
+
+	setTimeout(function () {
+		mainContainer.style.display = 'none';
+		rulesContainer.style.display = 'flex';
+	}, 250);
+	document.querySelectorAll('.float').forEach(element => {
+		element.style.display = 'none';
+	});
+	buttonAndDiceToggler();
+	containerToggler();
+})
+
+domExitRules.addEventListener('click', function () {
+
+	setTimeout(function () {
+		mainContainer.style.display = 'flex';
+		rulesContainer.style.display = 'none';
+	}, 250);
+
+	setTimeout(function () {
+		document.querySelectorAll('.float').forEach(element => {
+			element.style.display = 'flex';
+		});
+		buttonAndDiceToggler();
+	}, 400);
+
+	containerToggler();
+})
 
 btnRoll.addEventListener('click', function () {
 	finalScore = domFinalScoreInput.value;
@@ -79,8 +132,9 @@ btnHold.addEventListener('click', function () {
 	if (holds[currentPlayer] > 0 && currentScore > 0) {
 
 		if (scores[currentPlayer] + currentScore + holdValue >= finalScore) {
-			currentScore += holdValue;
-			manipulateDom('winner');
+			//currentScore += holdValue;
+			//manipulateDom('winner');
+			//----insert message here-----
 			return;
 		}
 		console.log('entered hold scope')
@@ -176,6 +230,7 @@ function switchCurrentPlayerDom() {
 }
 function showDice() {
 	domDice.style.display = 'block';
+	domDice.classList.add('float');
 	domDice.innerHTML = '<img src="img/dice-' + dice + '.png" alt="image of rolled dice">';
 }
 function hideDice() {
@@ -201,6 +256,7 @@ function initGame() {
 	holds = [HOLD_COUNT, HOLD_COUNT];
 	dice = 0;
 	gameIsPlaying = false;
+	domDice.classList.remove('float');
 	domFinalScoreInput.disabled = false;
 	domDots.forEach((dot) => {
 		for (var i = 0; i < HOLD_COUNT * 2; i++) dot.classList.add('hold');

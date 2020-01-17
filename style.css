@@ -19,7 +19,7 @@ body {
 	align-items: center;
 	justify-content: center;
 }
-.main-container {
+.main-container,.container-rules {
 	overflow: hidden;
 	width: 75%;
 	height: 85%;
@@ -32,7 +32,43 @@ body {
 	-o-border-radius: 20px;
 	text-align: center;
 	position: relative;
+	
 }
+.visible{
+	animation-name: fade-in;
+	animation-duration: 0.25s;
+	animation-fill-mode: forwards;
+}
+.invisible{
+	animation-name: fade-out;
+	animation-duration: 0.25s;
+	animation-fill-mode: forwards;
+}
+
+.wrapper{
+	padding:2rem 5rem;
+	color:rgb(255, 22, 22);
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-column-gap: 2rem;
+	grid-row-gap: 0rem;
+	line-height: 1.4rem;
+
+}
+.rules-title{
+	color: rgb(43, 43, 43);
+	grid-column: 1 / 3;
+}
+
+.container-rules{
+	display: none;
+	background-image:  linear-gradient(rgba(255, 255, 255, 0.788), rgba(252, 252, 252, 0.788)), url(img/dice-bg.jpg);
+	background-size: cover;
+	 
+}
+
+
+
 .container-player {
 	width: 50%;
 	display: flex;
@@ -195,6 +231,17 @@ body {
 	-ms-transition: opacity 0.3s;
 	-o-transition: opacity 0.3s;
 }
+
+h3{
+	text-align: left;
+	margin: 0.5rem 0;
+}
+p,.wrapper div {
+	text-align: left;
+	text-transform: lowercase;
+	font-size: 1.1rem;
+	font-weight: 400;
+}
 .rules {
 	position: absolute;
 	top: 3%;
@@ -202,7 +249,15 @@ body {
 	background-color: transparent;
 	border: none;
 	color: rgb(255, 79, 79);
+	outline: none;
+	cursor: pointer;
 }
+.rules-dot{
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 0.2rem;
+}
+
 
 /*---------------------------------------------ACTIVE-----------------------------------------*/
 
@@ -225,7 +280,7 @@ body {
 	-o-transform: scale(1.02);
 }
 
-.active .dot.hold {
+.rules-dot .dot,.active .dot.hold {
 	width: 1rem;
 	height: 1rem;
 	opacity: 1;
@@ -236,6 +291,7 @@ body {
 	-ms-border-radius: 50%;
 	-o-border-radius: 50%;
 }
+
 .animate.player-score,
 .animate.player-name h1 {
 	animation-name: pop-score;
@@ -268,5 +324,22 @@ body {
 	}
 	100% {
 		font-size: 5rem;
+	}
+}
+
+@keyframes fade-in{
+	from{
+		opacity:0;
+	}
+	to{
+		opacity:1;
+	}
+}
+@keyframes fade-out{
+	from{
+		opacity:1;
+	}
+	to{
+		opacity:0;
 	}
 }
